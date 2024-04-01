@@ -14,9 +14,9 @@ class nextGrid extends FlameGame
   @override
   Color backgroundColor() => const Color(0xFF211F30);
   late final CameraComponent cam;
-  Player player = Player(character: 'Mask Dude');
+  Player player = Player(character: 'Ninja Frog');
   late JoystickComponent joystick;
-  bool showJoystick = true;
+  bool showJoystick = false;
 
   @override
   FutureOr<void> onLoad() async {

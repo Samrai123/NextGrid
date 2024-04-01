@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-02.tmx",
+    "activeFile": "level-01.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -17,11 +17,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 1,
-            "selectedLayer": 1,
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 336.5,
-                "y": 91.5
+                "x": 295.25,
+                "y": 180.75
             }
         },
         "level-02.tmx": {
@@ -31,8 +31,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 79.66666666666663,
-                "y": 270.99999999999994
+                "x": -241.66666666666663,
+                "y": 267
             }
         }
     },
@@ -50,8 +50,8 @@
     "project": "nextgrid.tiled-project",
     "recentFiles": [
         "NextGrid.tsx",
-        "level-01.tmx",
-        "level-02.tmx"
+        "level-02.tmx",
+        "level-01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
