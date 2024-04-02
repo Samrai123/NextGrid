@@ -10,7 +10,11 @@ import 'package:nextgrid/compnents/player.dart';
 import 'package:nextgrid/compnents/level.dart';
 
 class nextGrid extends FlameGame
-    with HasKeyboardHandlerComponents, DragCallbacks {
+    with
+        HasKeyboardHandlerComponents,
+        DragCallbacks,
+        TapCallbacks,
+        HasCollisionDetection {
   @override
   Color backgroundColor() => const Color(0xFF211F30);
   late final CameraComponent cam;

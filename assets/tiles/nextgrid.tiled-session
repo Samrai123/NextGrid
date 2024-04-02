@@ -18,10 +18,10 @@
                 2
             ],
             "scale": 2,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 295.25,
-                "y": 180.75
+                "x": 135.25,
+                "y": 202.25
             }
         },
         "level-02.tmx": {
@@ -31,8 +31,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": -241.66666666666663,
-                "y": 267
+                "x": 319.66666666666663,
+                "y": 184.33333333333334
             }
         }
     },
@@ -48,6 +48,7 @@
         "level-02.tmx"
     ],
     "project": "nextgrid.tiled-project",
+    "property.type": "float",
     "recentFiles": [
         "NextGrid.tsx",
         "level-02.tmx",
