@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/foundation.dart';
 import 'package:nextgrid/compnents/background_title.dart';
+import 'package:nextgrid/compnents/checkpoint.dart';
 import 'package:nextgrid/compnents/collision_block.dart';
 import 'package:nextgrid/compnents/fruit.dart';
 
@@ -65,6 +66,7 @@ class Level extends World with HasGameRef<nextGrid> {
             //     character: 'Pink Man',
             //     position: Vector2(spawnPoint.x, spawnPoint.y));
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
+            player.scale.x = 1;
             add(player);
             break;
           case 'Fruit':
@@ -86,6 +88,15 @@ class Level extends World with HasGameRef<nextGrid> {
                 position: Vector2(spawnPoint.x, spawnPoint.y),
                 size: Vector2(spawnPoint.width, spawnPoint.height));
             add(saw);
+            break;
+          case 'Checkpoint':
+            final checkpoint = Checkpoint(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(checkpoint);
+            break;
+
           default:
         }
       }
