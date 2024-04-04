@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/src/services/hardware_keyboard.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
@@ -21,7 +23,7 @@ enum PlayerState {
   falling,
   hit,
   appearing,
-  disappearing
+  disappearing,
 }
 
 class Player extends SpriteAnimationGroupComponent
@@ -117,7 +119,7 @@ class Player extends SpriteAnimationGroupComponent
     runningAnimation = _spriteAnimation('Run', 12);
     jumpingAnimation = _spriteAnimation('Jump', 1);
     fallingAnimation = _spriteAnimation('Fall', 1);
-    hitAnimation = _spriteAnimation('Hit', 7);
+    hitAnimation = _spriteAnimation('Hit', 7)..loop = false;
     appearingAnimation = _specialSpriteAnimation('Appearing', 7);
     disappearingAnimation = _specialSpriteAnimation('Desappearing', 7);
 
@@ -147,7 +149,10 @@ class Player extends SpriteAnimationGroupComponent
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Main Characters/$state (96x96).png'),
       SpriteAnimationData.sequenced(
-          amount: amount, stepTime: stepTime, textureSize: Vector2.all(96)),
+          amount: amount,
+          stepTime: stepTime,
+          textureSize: Vector2.all(96),
+          loop: false),
     );
   }
 
@@ -232,69 +237,59 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _playerJump(double dt) {
+    if (game.playSounds)
+      FlameAudio.play('jump.wav', volume: game.soundVolume * .5);
     velocity.y = -_jumpForce;
     position.y += velocity.y * dt;
     isOnGround = false;
     hasJumped = false;
   }
 
-  void _respawn() {
-    const hitDuration = Duration(milliseconds: 350);
-    const apperaingDuration = Duration(milliseconds: 350);
+  void _respawn() async {
+    if (game.playSounds) {
+      FlameAudio.play('hitHurt.wav', volume: game.soundVolume * .5);
+    }
+
     const cantMoveDuration = Duration(milliseconds: 400);
     gotHit = true;
     current = PlayerState.hit;
-    Future.delayed(hitDuration, () {
-      scale.x = 1;
-      position = startingPosition - Vector2.all(32);
-      current = PlayerState.appearing;
 
-      Future.delayed(apperaingDuration, () {
-        velocity = Vector2.zero();
-        position = startingPosition;
-        _updatePlayerState();
-        Future.delayed(cantMoveDuration, () => gotHit = false);
-      });
-    });
-    // position = startingPosition;
+    await animationTicker?.completed;
+    animationTicker?.reset();
+
+    scale.x = 1;
+    position = startingPosition - Vector2.all(32);
+    current = PlayerState.appearing;
+
+    await animationTicker?.completed;
+    animationTicker?.reset();
+
+    velocity = Vector2.zero();
+    position = startingPosition;
+    _updatePlayerState();
+    Future.delayed(cantMoveDuration, () => gotHit = false);
   }
 
-  void _reachedCheckpoint() {
+  void _reachedCheckpoint() async {
     reachCheckpoint = true;
+    if (game.playSounds) {
+      FlameAudio.play('Checkpoint.wav', volume: game.soundVolume * .5);
+    }
+
     if (scale.x > 0) {
       position = position - Vector2.all(32);
     } else if (scale.x < 0) {
       position = position + Vector2(32, -32);
     }
     current = PlayerState.disappearing;
-    const reachedCheckpoint = Duration(milliseconds: 350);
-    Future.delayed(reachedCheckpoint, () {
-      reachCheckpoint = false;
-      position = Vector2.all(-640);
-      const waitToChangeDuration = Duration(seconds: 3);
-      Future.delayed(waitToChangeDuration, () {
-        game.loadNext();
-      });
-    });
+
+    await animationTicker?.completed;
+    animationTicker?.reset();
+
+    reachCheckpoint = false;
+    position = Vector2.all(-640);
+
+    const waitToChangeDuration = Duration(seconds: 3);
+    Future.delayed(waitToChangeDuration, () => game.loadNextLevel());
   }
-  // void _respawn() async {
-  //   const canMoveDuration = Duration(milliseconds: 400);
-  //   gotHit = true;
-  //   current = PlayerState.hit;
-
-  //   await animationTicker?.completed;
-  //   animationTicker?.reset();
-
-  //   scale.x = 1;
-  //   position = startingPosition - Vector2.all(32);
-  //   current = PlayerState.appearing;
-
-  //   await animationTicker?.completed;
-  //   animationTicker?.reset();
-
-  //   velocity = Vector2.zero();
-  //   position = startingPosition;
-  //   _updatePlayerState();
-  //   Future.delayed(canMoveDuration, () => gotHit = false);
-  // }
 }

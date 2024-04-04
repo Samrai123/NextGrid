@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-01.tmx",
+    "activeFile": "level-02.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -30,9 +30,9 @@
                 2
             ],
             "scale": 1.5,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 255,
+                "x": -192.99999999999997,
                 "y": 184.33333333333334
             }
         }
@@ -52,8 +52,8 @@
     "property.type": "float",
     "recentFiles": [
         "NextGrid.tsx",
-        "level-02.tmx",
-        "level-01.tmx"
+        "level-01.tmx",
+        "level-02.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

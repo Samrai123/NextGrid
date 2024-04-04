@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/cache.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:nextgrid/compnents/custom_hitbox.dart';
 import 'package:nextgrid/nextgrid.dart';
 
@@ -11,9 +12,10 @@ class Fruit extends SpriteAnimationComponent
   final String fruit;
   Fruit({position, size, this.fruit = 'Apple'})
       : super(position: position, size: size, removeOnFinish: true);
-  bool _collected = false;
+  // bool _collected = false;
   final double stepTime = 0.05;
   final hitbox = CustomHitbox(offsetX: 10, offsetY: 10, width: 12, height: 12);
+  bool collected = false;
   @override
   FutureOr<void> onLoad() {
     // debugMode = true;
@@ -34,8 +36,10 @@ class Fruit extends SpriteAnimationComponent
     return super.onLoad();
   }
 
-  void colliedWithPlayer() {
-    if (!_collected) {
+  void colliedWithPlayer() async {
+    if (!collected) {
+      if (game.playSounds)
+        FlameAudio.play('collectFruit.wav', volume: game.soundVolume * .5);
       animation = SpriteAnimation.fromFrameData(
         game.images.fromCache(
           'Items/Fruits/Collected.png',
@@ -48,5 +52,7 @@ class Fruit extends SpriteAnimationComponent
         ),
       );
     }
+    await animationTicker?.completed;
+    removeFromParent();
   }
 }

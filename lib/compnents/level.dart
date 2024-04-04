@@ -104,25 +104,6 @@ class Level extends World with HasGameRef<nextGrid> {
   }
 
   void _scrollingBackground() {
-    // final backgroundLayer = level.tileMap.getLayer('Background');
-    // const tileSize = 64;
-    // final numTileY = (game.size.y / tileSize).round();
-    // final numTileX = (game.size.x / tileSize).round();
-
-    // if (backgroundLayer != null) {
-    //   final backgroundColor =
-    //       backgroundLayer.properties.getValue('BackgroundColor');
-    //   for (double y = 0; y < game.size.y / numTileY; y++) {
-    //     for (double x = 0; x < numTileX; x++) {
-    //       final backgroundTile = BackgroundTile(
-    //         color: backgroundColor ?? 'Gray',
-    //         position: Vector2(x * tileSize, y * tileSize),
-    //       );
-
-    //       add(backgroundTile);
-    //     }
-    //   }
-    // }
     final backgroundLayer = level.tileMap.getLayer('Background');
 
     if (backgroundLayer != null) {
