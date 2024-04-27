@@ -3,11 +3,9 @@ import 'dart:ffi';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/src/services/hardware_keyboard.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:nextgrid/compnents/checkpoint.dart';
 import 'package:nextgrid/compnents/collision_block.dart';
 import 'package:nextgrid/compnents/custom_hitbox.dart';
@@ -237,8 +235,10 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _playerJump(double dt) {
-    if (game.playSounds)
-      FlameAudio.play('jump.wav', volume: game.soundVolume * .5);
+    if (game.playSounds) {
+      FlameAudio.play('jump.wav', volume: game.soundVolume * .3);
+    }
+    ;
     velocity.y = -_jumpForce;
     position.y += velocity.y * dt;
     isOnGround = false;
@@ -247,7 +247,7 @@ class Player extends SpriteAnimationGroupComponent
 
   void _respawn() async {
     if (game.playSounds) {
-      FlameAudio.play('hitHurt.wav', volume: game.soundVolume * .5);
+      FlameAudio.play('hitHurt.wav', volume: game.soundVolume * .3);
     }
 
     const cantMoveDuration = Duration(milliseconds: 400);
@@ -273,7 +273,7 @@ class Player extends SpriteAnimationGroupComponent
   void _reachedCheckpoint() async {
     reachCheckpoint = true;
     if (game.playSounds) {
-      FlameAudio.play('Checkpoint.wav', volume: game.soundVolume * .5);
+      FlameAudio.play('Checkpoint.wav', volume: game.soundVolume * .3);
     }
 
     if (scale.x > 0) {
